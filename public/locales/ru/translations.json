@@ -178,6 +178,9 @@
       "status": "СТАТУС",
       "pricetrail": "ТРЕЙЛИНГОВАЯ ЦЕНА",
       "typeprev": "ПРЕДЫДУЩИЙ ТИП ОРДЕРА"
+    },
+    "id": {
+      "title": "Orders by ID"
     }
   },
   "pagination": {

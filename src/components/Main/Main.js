@@ -12,6 +12,7 @@ import FundingPayment from 'components/FundingPayment'
 import Ledgers from 'components/Ledgers'
 import Movements from 'components/Movements'
 import Orders from 'components/Orders'
+import OrdersId from 'components/OrdersId'
 import Positions from 'components/Positions'
 import PositionsActive from 'components/PositionsActive'
 import PositionsAudit from 'components/PositionsAudit'
@@ -39,6 +40,7 @@ const {
   MENU_FPAYMENT,
   MENU_LEDGERS,
   MENU_ORDERS,
+  MENU_ORDERS_ID,
   MENU_TRADES,
   MENU_DEPOSITS,
   MENU_WITHDRAWALS,
@@ -71,6 +73,7 @@ class Main extends PureComponent {
   handleClick = (target) => {
     const { history } = this.props
     // remove url params
+    console.log(1, history.location)
     history.push(`${getPath(target)}${history.location.search}`)
   }
 
@@ -172,6 +175,15 @@ class Main extends PureComponent {
             <Route
               path={`${getPath(MENU_ORDERS)}/:pair`}
               render={() => <Orders handleClickExport={this.handleClickExport} />}
+            />
+            <Route
+              exact
+              path={`${getPath(MENU_ORDERS_ID)}`}
+              render={() => <OrdersId handleClickExport={this.handleClickExport} />}
+            />
+            <Route
+              path={`${getPath(MENU_ORDERS_ID)}/:id`}
+              render={() => <OrdersId handleClickExport={this.handleClickExport} />}
             />
             <Route
               exact

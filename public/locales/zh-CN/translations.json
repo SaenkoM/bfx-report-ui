@@ -178,6 +178,9 @@
       "status": "状态",
       "pricetrail": "历史价格",
       "typeprev": "先前订单类型"
+    },
+    "id": {
+      "title": "Orders by ID"
     }
   },
   "pagination": {

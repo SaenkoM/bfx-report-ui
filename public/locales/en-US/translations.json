@@ -178,6 +178,9 @@
       "status": "STATUS",
       "pricetrail": "TRAILING PRICE",
       "typeprev": "PREVIOUS ORDER TYPE"
+    },
+    "id": {
+      "title": "Orders by ID"
     }
   },
   "pagination": {

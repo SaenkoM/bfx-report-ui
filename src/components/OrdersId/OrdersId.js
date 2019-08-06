@@ -4,10 +4,10 @@ import {
   Button,
   ButtonGroup,
   Card,
-  Elevation,
+  Elevation, Intent, Position, Tooltip,
 } from '@blueprintjs/core'
+import _get from 'lodash/get'
 
-import Pagination from 'ui/Pagination'
 import TimeRange from 'ui/TimeRange'
 import DataTable from 'ui/DataTable'
 import ExportButton from 'ui/ExportButton'
@@ -16,97 +16,83 @@ import NoData from 'ui/NoData'
 import MultiPairSelector from 'ui/MultiPairSelector'
 import RefreshButton from 'ui/RefreshButton'
 import queryConstants from 'state/query/constants'
-import { getPageSize } from 'state/query/utils'
-import {
-  checkFetch,
-  getCurrentEntries,
-  togglePair,
-} from 'state/utils'
+import { checkFetch, togglePair } from 'state/utils'
 
-import getColumns from './Orders.columns'
+import getColumns from '../Orders/Orders.columns'
 import { propTypes, defaultProps } from './Orders.props'
 
-const TYPE = queryConstants.MENU_ORDERS
-const PAGE_SIZE = getPageSize(TYPE)
+const { MENU_ORDERS_ID } = queryConstants
 
-class Orders extends PureComponent {
+class OrdersId extends PureComponent {
   componentDidMount() {
     const { loading, fetchOrders, match } = this.props
     if (loading) {
-      const pair = (match.params && match.params.pair) || ''
-      fetchOrders(pair)
+      const id = _get(match, ['params', 'id'])
+      console.log(1, match)
+      if (id) {
+        fetchOrders(id)
+      }
     }
   }
 
   componentDidUpdate(prevProps) {
-    checkFetch(prevProps, this.props, TYPE)
+    checkFetch(prevProps, this.props, MENU_ORDERS_ID)
   }
 
-  jumpToOrdersId = () => {
+  jumpToOrders = () => {
     const { history } = this.props
 
-    history.push(`/orders_id${history.location.search}`)
+    history.push(`/orders${history.location.search}`)
   }
 
   render() {
     const {
-      existingPairs,
-      fetchNext,
-      fetchPrev,
-      getQueryLimit,
-      offset,
-      pageOffset,
-      pageLoading,
       entries,
       handleClickExport,
-      jumpPage,
       loading,
       refresh,
-      targetPairs,
       getFullTime,
-      nextPage,
       t,
       timeOffset,
     } = this.props
-    const limit = getQueryLimit(TYPE)
-    const filteredData = getCurrentEntries(entries, offset, limit, pageOffset, PAGE_SIZE)
-    const numRows = filteredData.length
+
+    const numRows = entries.length
     const tableColums = getColumns({
-      filteredData,
+      filteredData: entries,
       getFullTime,
       t,
       timeOffset,
     })
 
-    const renderPagination = (
-      <Pagination
-        type={TYPE}
-        dataLen={entries.length}
-        loading={pageLoading}
-        offset={offset}
-        jumpPage={jumpPage}
-        prevClick={fetchPrev}
-        nextClick={fetchNext}
-        pageOffset={pageOffset}
-        nextPage={nextPage}
-      />
-    )
-
-    const renderPairSelector = (
+    const renderIdSelector = (
       <Fragment>
-        {' '}
-        <MultiPairSelector
-          currentFilters={targetPairs}
-          existingPairs={existingPairs}
-          togglePair={pair => togglePair(TYPE, this.props, pair)}
-        />
+        <Tooltip
+          content={(
+            <span>
+              {t('wallets.query.tooltip')}
+            </span>
+          )}
+          position={Position.TOP}
+          usePortal
+        >
+          <MultiPairSelector
+            togglePair={pair => togglePair(MENU_ORDERS_ID, this.props, pair)}
+          />
+        </Tooltip>
+        <Button
+          onClick={this.handleQuery}
+          // intent={hasNewTime ? Intent.PRIMARY : null}
+          // disabled={!hasNewTime}
+        >
+          {t('wallets.query.title')}
+        </Button>
       </Fragment>
     )
 
     const renderButtonGroup = (
       <ButtonGroup>
-        <Button active>{t('orders.title')}</Button>
-        <Button onClick={this.jumpToOrdersId}>{t('orders.id.title')}</Button>
+        <Button onClick={this.jumpToOrders}>{t('orders.title')}</Button>
+        <Button active>{t('orders.id.title')}</Button>
       </ButtonGroup>
     )
 
@@ -122,9 +108,11 @@ class Orders extends PureComponent {
             {t('orders.title')}
             {' '}
             <TimeRange />
-            {renderPairSelector}
+            {renderIdSelector}
           </h4>
           {renderButtonGroup}
+          <br />
+          <br />
           <NoData />
         </Fragment>
       )
@@ -135,19 +123,20 @@ class Orders extends PureComponent {
             {t('orders.title')}
             {' '}
             <TimeRange />
-            {renderPairSelector}
+            {renderIdSelector}
             {' '}
             <ExportButton handleClickExport={handleClickExport} />
             {' '}
             <RefreshButton handleClickRefresh={refresh} />
           </h4>
           {renderButtonGroup}
-          {renderPagination}
+          <br />
+          <br />
+          <br />
           <DataTable
             numRows={numRows}
             tableColums={tableColums}
           />
-          {renderPagination}
         </Fragment>
       )
     }
@@ -160,7 +149,7 @@ class Orders extends PureComponent {
   }
 }
 
-Orders.propTypes = propTypes
-Orders.defaultProps = defaultProps
+OrdersId.propTypes = propTypes
+OrdersId.defaultProps = defaultProps
 
-export default withTranslation('translations')(Orders)
+export default withTranslation('translations')(OrdersId)

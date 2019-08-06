@@ -9,6 +9,7 @@ export default {
   MENU_LEDGERS: 'ledgers',
   MENU_MOVEMENTS: 'movements',
   MENU_ORDERS: 'orders',
+  MENU_ORDERS_ID: 'ordersid',
   MENU_TICKERS: 'tickers',
   MENU_TRADES: 'trades',
   MENU_POSITIONS: 'positions',

@@ -178,6 +178,9 @@
       "status": "狀態",
       "pricetrail": "歷史價格",
       "typeprev": "先前訂單類型"
+    },
+    "id": {
+      "title": "Orders by ID"
     }
   },
   "pagination": {

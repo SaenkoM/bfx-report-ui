@@ -25,6 +25,7 @@ const {
   MENU_FPAYMENT,
   MENU_LEDGERS,
   MENU_ORDERS,
+  MENU_ORDERS_ID,
   MENU_TICKERS,
   MENU_TRADES,
   MENU_POSITIONS,
@@ -103,7 +104,7 @@ class ToggleMenu extends PureComponent {
           text={isIconMode ? '' : t('orders.title')}
           title={isIconMode ? t('orders.title') : ''}
           onClick={this.handleClickOrders}
-          active={target === MENU_ORDERS}
+          active={target === MENU_ORDERS || target === MENU_ORDERS_ID}
         />
         <MenuItem
           icon={getIcon(MENU_DEPOSITS)}

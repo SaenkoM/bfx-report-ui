@@ -39,6 +39,7 @@ class PositionsAudit extends PureComponent {
   componentDidMount() {
     const { loading, fetchPaudit, match } = this.props
     if (loading) {
+      console.log(2, match)
       const id = (match.params && match.params.id)
       if (id) {
         fetchPaudit(id)

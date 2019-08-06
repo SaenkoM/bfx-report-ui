@@ -14,6 +14,7 @@ import fundingPaymentReducer from './fundingPayment/reducer'
 import ledgersReducer from './ledgers/reducer'
 import movementsReducer from './movements/reducer'
 import ordersReducer from './orders/reducer'
+import ordersIdReducer from './ordersId/reducer'
 import positionsAuditReducer from './audit/reducer'
 import positionsActiveReducer from './positionsActive/reducer'
 import positionsReducer from './positions/reducer'
@@ -50,6 +51,7 @@ const BASE_REDUCERS = {
   ledgers: ledgersReducer,
   movements: movementsReducer,
   orders: ordersReducer,
+  ordersId: ordersIdReducer,
   positions: positionsReducer,
   publicFunding: publicFundingReducer,
   publicTrades: publicTradesReducer,
